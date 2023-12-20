@@ -1,4 +1,4 @@
-# zy
+![zy logo](https://zy.snwy.me/zy.svg)
 This is the reference implementation of the zy programming language, written in Kotlin.
 It's naive, quite unoptimized and quite slow. It's main purpose is to tide the project over
 until a faster, smarter interpreter can be written. This is more of a PoC, although it is
