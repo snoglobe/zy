@@ -1,0 +1,73 @@
+' a lua-like purely functional language
+
+' factorial function
+fn fact(n) ::
+    if n = 0 then
+       1
+    else
+       n * fact(n-1)
+' read a number from the console
+and let a :: read() in
+    a . toNum . fact . print
+
+' an iterative factorial function
+and fn fact2(n) ::
+    range(1, n+1)
+    . foldl(1, mul)
+' read a number from the console
+and let a :: read() in
+    a . toNum . fact2 . print ' composition of functions
+
+' obligatory fibonacci function
+and fn fib(n) ::
+    if n < 2 then
+        n
+    else
+        fib(n-1) + fib(n-2)
+and let a :: read() in
+    a . toNum . fib . print
+
+' test of currying
+and fn test(a, b, c) ::
+    print(a + b + c)
+and let _ :: () in
+    test(1)(2)(3) ' 6
+
+' test of assignment
+and let c :: 0 in
+    c :: 3 in
+    print(c) ' 3
+
+' test of closures
+and fn counter(i) ::
+    fn () ::
+        i :: i + 1 in i
+    end ' end keyword prevents the parser from
+        ' attaching the next "and" to the inner function,
+        ' could also just use parentheses
+
+' test of closures
+and let c :: counter(0) in
+    print(c()) ; ' 1
+    print(c()) ; ' 2
+    print(c())   ' 3
+and let d :: counter(0) in
+    print(d()) ; ' 1
+    print(d()) ; ' 2
+    print(d())   ' 3
+
+' test of lists
+and let l :: [1, 2, 3] in
+    print(l) ; ' [1, 2, 3]
+    print(l . head) ; ' 1
+    print(l . tail) ; ' [2, 3]
+    print(l .. [4, 5, 6]) ; ' [1, 2, 3, 4, 5, 6]
+    print(l.nth(1)) ' 2
+    ' and a whole other bunch of list functions
+
+' test of regex
+and let expr :: regex("a*b") in
+    print(expr.match("aaab")) ; ' true
+    print(expr.match("b")) ; ' true
+    print(expr.match("ab")) ; ' true
+    print(expr.match("c")) ; ' false

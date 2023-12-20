@@ -1,0 +1,16 @@
+sealed class Node(open val pos: Pair<Int, Int>) {
+    data class Fn(val name: String?, val args: List<String>, val body: Node, val next: Node?, override val pos: Pair<Int, Int>) : Node(pos)
+    data class Let(val name: String, val value: Node, val body: Node, val next: Node?, override val pos: Pair<Int, Int>) : Node(pos)
+    data class If(val cond: Node, val then: Node, val els: Node, override val pos: Pair<Int, Int>) : Node(pos)
+    data class Call(val fn: Node, val args: List<Node>, override val pos: Pair<Int, Int>) : Node(pos)
+    data class BinOp(val op: Token.Operator, val left: Node, val right: Node, override val pos: Pair<Int, Int>) : Node(pos)
+    data class UnOp(val op: Token.Operator, val expr: Node, override val pos: Pair<Int, Int>) : Node(pos)
+    data class Var(val name: String, override val pos: Pair<Int, Int>) : Node(pos)
+    data class Num(val value: Double, override val pos: Pair<Int, Int>) : Node(pos)
+    data class Str(val value: String, override val pos: Pair<Int, Int>) : Node(pos)
+    data class Bool(val value: Boolean, override val pos: Pair<Int, Int>) : Node(pos)
+    data class ListLit(val value: List<Node>, override val pos: Pair<Int, Int>) : Node(pos)
+    data class Nil(override val pos: Pair<Int, Int>) : Node(pos)
+    data class Assign(val left: Node, val right: Node, val next: Node, override val pos: Pair<Int, Int>) : Node(pos)
+    data class Seq(val left: Node, val right: Node, override val pos: Pair<Int, Int>) : Node(pos)
+}
